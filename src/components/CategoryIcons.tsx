@@ -11,21 +11,28 @@ import {
   Sigma,
   Star,
   TrafficCone,
+  UserRoundPlus,
 } from "lucide-react";
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 
 export function CategoryIcons() {
   return (
-    <Card className="mx-4 p-4 flex flex-col justify-between items-center">
+    <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px]">
+      <Button variant="outline" size="icon">
+        <UserRoundPlus />
+      </Button>
       <Dice1 />
       <Dice2 />
       <Dice3 />
       <Dice4 />
       <Dice5 />
       <Dice6 />
-      <hr className="w-full" />
-      <Sigma />
-      <hr className="w-full" />
+      <div>
+        <hr className="w-full mb-3" />
+        <Sigma />
+        <hr className="w-full mt-3" />
+      </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -64,7 +71,7 @@ export function CategoryIcons() {
       <Milestone />
       <TrafficCone />
       <Star />
-      <ShieldHalf />
+      <ShieldHalf className="mb-2" />
     </Card>
   );
 }
