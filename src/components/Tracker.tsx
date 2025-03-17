@@ -1,8 +1,12 @@
 import { Card } from "@/components/ui/card";
+import CategoryIcons from "./CategoryIcons";
 
 const Tracker = () => {
   return (
-    <Card className="m-4 p-4 flex flex-row justify-between items-center"></Card>
+    <div className="flex flex-row">
+      <CategoryIcons />
+      <Card className="p-4 flex flex-row justify-between items-center"></Card>
+    </div>
   );
 };
 
