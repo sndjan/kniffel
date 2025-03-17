@@ -1,9 +1,11 @@
-import ThemeChanger from "../../components/ThemeChanger";
+import Header from "@/components/Header";
+import Tracker from "@/components/Tracker";
 
 export default function Home() {
   return (
-    <div>
-      <ThemeChanger></ThemeChanger>
-    </div>
+    <>
+      <Header></Header>
+      <Tracker></Tracker>
+    </>
   );
 }
