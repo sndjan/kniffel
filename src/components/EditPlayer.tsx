@@ -1,6 +1,12 @@
-import { EllipsisVertical, RotateCcw, Trash2, Trophy } from "lucide-react";
+import {
+  ArrowBigLeft,
+  ArrowBigRight,
+  EllipsisVertical,
+  Pencil,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,29 +17,35 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Menu() {
+export function EditPlayer() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <EllipsisVertical />
-        </Button>
+        <EllipsisVertical size={16} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Optionen</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
+            <Pencil />
+            <span>Name bearbeiten</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
             <RotateCcw />
             <span>Werte zurücksetzen</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Trash2 />
-            <span>Alles zurücksetzen</span>
+            <ArrowBigLeft size={16} />
+            <span>Nach links verschieben</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Trophy />
-            <span>Punkteauswertung</span>
+            <ArrowBigRight size={16} />
+            <span>Nach rechts verschieben</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Trash2 />
+            <span>Spieler löschen</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
