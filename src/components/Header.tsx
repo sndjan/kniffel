@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Dices } from "lucide-react";
 import { Menu } from "./Menu";
 import { ModeToggle } from "./ModeToggle";
-import { Button } from "@/components/ui/button";
+import { Scoring } from "./Scoring";
 
 const Header = () => {
   return (
@@ -14,7 +14,7 @@ const Header = () => {
         </h1>
       </div>
       <div className="flex flex-row space-x-4">
-        <Button className="hidden sm:block">Punkteauswertung</Button>
+        <Scoring />
         <ModeToggle />
         <Menu />
       </div>

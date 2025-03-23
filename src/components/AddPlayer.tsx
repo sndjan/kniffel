@@ -1,4 +1,5 @@
 import { UserRoundPlus } from "lucide-react";
+import { AnimatedScoreDiagram } from "./AnimatedScoreDiagram"; // Import the new diagram component
 
 import {
   Dialog,
@@ -33,6 +34,7 @@ export function CategoryIcons() {
           </label>
           <Input id="username" className="col-span-3" />
         </div>
+
         <DialogFooter>
           <Button type="submit">Hinzufügen</Button>
         </DialogFooter>

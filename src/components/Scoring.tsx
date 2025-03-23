@@ -1,38 +1,32 @@
-import { EllipsisVertical, RotateCcw, Trash2 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import AnimatedScoreDiagram from "./AnimatedScoreDiagram";
 
-export function Menu() {
+export function Scoring() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <EllipsisVertical />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Optionen</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <RotateCcw />
-            <span>Werte zurücksetzen</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Trash2 />
-            <span>Alles zurücksetzen</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="hidden sm:block">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Punkteauswertung</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Punkteauswertung</DialogTitle>
+          </DialogHeader>
+          <DialogDescription>Siehe wer gewonnen hat</DialogDescription>
+          {/* Add the animated scoring diagram */}
+          <div className="mt-4">
+            <AnimatedScoreDiagram />
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
