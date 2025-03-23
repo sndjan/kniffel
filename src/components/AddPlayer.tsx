@@ -1,5 +1,4 @@
 import { UserRoundPlus } from "lucide-react";
-import { AnimatedScoreDiagram } from "./AnimatedScoreDiagram"; // Import the new diagram component
 
 import {
   Dialog,
