@@ -3,8 +3,15 @@ import { Dices } from "lucide-react";
 import { Menu } from "./Menu";
 import { ModeToggle } from "./ModeToggle";
 import { Scoring } from "./Scoring";
+import { Player } from "./hooks/useKniffel";
 
-const Header = () => {
+interface HeaderProps {
+  resetAll: () => void;
+  players: Player[];
+  resetAllPoints: () => void;
+}
+
+const Header = ({ resetAll, players, resetAllPoints }: HeaderProps) => {
   return (
     <Card className="m-4 p-4 flex flex-row justify-between items-center">
       <div className="flex flex-row space-x-4">
@@ -14,9 +21,9 @@ const Header = () => {
         </h1>
       </div>
       <div className="flex flex-row space-x-4">
-        <Scoring />
+        <Scoring players={players} />
         <ModeToggle />
-        <Menu />
+        <Menu resetAll={resetAll} resetAllPoints={resetAllPoints} />
       </div>
     </Card>
   );

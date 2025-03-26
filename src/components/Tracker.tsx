@@ -1,30 +1,48 @@
 "use client";
 
 import CategoryIcons from "./CategoryIcons";
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import PlayerCard from "./PlayerCard";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+interface TrackerProps {
+  players: Array<{ id: number; name: string; points: number }>;
+  addPlayer: (name: string) => void;
+  updatePoints: (id: number, points: number) => void;
+  resetPoints: () => void;
+  removePlayer: (id: number) => void;
+  changeName: (id: number, name: string) => void;
+  moveToRight: (id: number) => void;
+  moveToLeft: (id: number) => void;
+}
 
-const Tracker = () => {
+const Tracker: React.FC<TrackerProps> = ({
+  players,
+  addPlayer,
+  updatePoints,
+  resetPoints,
+  removePlayer,
+  changeName,
+  moveToRight,
+  moveToLeft,
+}) => {
   return (
     <div className="flex">
-      <CategoryIcons />
+      <CategoryIcons addPlayer={addPlayer} />
       <Carousel className="w-full">
         <CarouselContent className="-ml-6">
-          <CarouselItem className="sm:basis-1/5 basis-2/5 pl-2">
-            <PlayerCard name="Spieler 1"></PlayerCard>
-          </CarouselItem>
-          <CarouselItem className="sm:basis-1/5 basis-2/5 pl-0">
-            <PlayerCard name="Spieler 2"></PlayerCard>
-          </CarouselItem>
-          <CarouselItem className="sm:basis-1/5 basis-2/5 pl-0">
-            <PlayerCard name="Spieler 3"></PlayerCard>
-          </CarouselItem>
-          <CarouselItem className="sm:basis-1/5 basis-2/5 pl-0">
-            <PlayerCard name="Spieler 4"></PlayerCard>
-          </CarouselItem>
-          <CarouselItem className="sm:basis-1/5 basis-2/5 pl-0">
-            <PlayerCard name="Spieler 5"></PlayerCard>
-          </CarouselItem>
+          {players.map((player) => (
+            <CarouselItem key={player.id} className="flex-1 pl-2">
+              <PlayerCard
+                name={player.name}
+                points={player.points}
+                updatePoints={(points) => updatePoints(player.id, points)}
+                resetPoints={() => resetPoints()}
+                removePlayer={() => removePlayer(player.id)}
+                changeName={(name) => changeName(player.id, name)}
+                moveToRight={() => moveToRight(player.id)}
+                moveToLeft={() => moveToLeft(player.id)}
+              />
+            </CarouselItem>
+          ))}
         </CarouselContent>
       </Carousel>
     </div>

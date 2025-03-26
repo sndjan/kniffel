@@ -1,5 +1,7 @@
 import { UserRoundPlus } from "lucide-react";
+import { useState } from "react";
 
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,9 +12,21 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 
-export function CategoryIcons() {
+interface AddPlayerProps {
+  addPlayer: (name: string) => void;
+}
+
+export function AddPlayer({ addPlayer }: AddPlayerProps) {
+  const [playerName, setPlayerName] = useState("");
+
+  const handleAddPlayer = () => {
+    if (playerName.trim()) {
+      addPlayer(playerName.trim());
+      setPlayerName("");
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -31,15 +45,22 @@ export function CategoryIcons() {
           <label htmlFor="username" className="text-right col-span-1">
             Name
           </label>
-          <Input id="username" className="col-span-3" />
+          <Input
+            id="username"
+            className="col-span-3"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+          />
         </div>
 
         <DialogFooter>
-          <Button type="submit">Hinzufügen</Button>
+          <Button type="button" onClick={handleAddPlayer}>
+            Hinzufügen
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default CategoryIcons;
+export default AddPlayer;

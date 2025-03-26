@@ -12,13 +12,16 @@ import {
   Star,
   TrafficCone,
 } from "lucide-react";
-import { Card } from "./ui/card";
 import AddPlayer from "./AddPlayer";
+import { Card } from "./ui/card";
+interface CategoryIconsProps {
+  addPlayer: (name: string) => void;
+}
 
-export function CategoryIcons() {
+export function CategoryIcons({ addPlayer }: CategoryIconsProps) {
   return (
     <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px]">
-      <AddPlayer></AddPlayer>
+      <AddPlayer addPlayer={addPlayer}></AddPlayer>
       <Dice1 />
       <Dice2 />
       <Dice3 />

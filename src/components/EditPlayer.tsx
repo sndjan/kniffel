@@ -2,7 +2,6 @@ import {
   ArrowBigLeft,
   ArrowBigRight,
   EllipsisVertical,
-  Pencil,
   RotateCcw,
   Trash2,
 } from "lucide-react";
@@ -16,8 +15,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+interface EditPlayerProps {
+  resetPoints: () => void;
+  removePlayer: () => void;
+  changeName: () => void;
+  moveToRight: () => void;
+  moveToLeft: () => void;
+}
 
-export function EditPlayer() {
+export function EditPlayer({
+  resetPoints,
+  removePlayer,
+  changeName,
+  moveToRight,
+  moveToLeft,
+}: EditPlayerProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,23 +39,23 @@ export function EditPlayer() {
         <DropdownMenuLabel>Optionen</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem onSelect={changeName}>
             <Pencil />
             <span>Name bearbeiten</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          </DropdownMenuItem> */}
+          <DropdownMenuItem onSelect={resetPoints}>
             <RotateCcw />
             <span>Werte zurücksetzen</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={moveToLeft}>
             <ArrowBigLeft size={16} />
             <span>Nach links verschieben</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={moveToRight}>
             <ArrowBigRight size={16} />
             <span>Nach rechts verschieben</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={removePlayer}>
             <Trash2 />
             <span>Spieler löschen</span>
           </DropdownMenuItem>

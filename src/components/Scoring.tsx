@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import AnimatedScoreDiagram from "./AnimatedScoreDiagram";
+import { Player } from "./hooks/useKniffel";
 import {
   Dialog,
   DialogContent,
@@ -7,9 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import AnimatedScoreDiagram from "./AnimatedScoreDiagram";
 
-export function Scoring() {
+interface ScoringProps {
+  players: Player[];
+}
+
+export function Scoring({ players }: ScoringProps) {
   return (
     <div className="hidden sm:block">
       <Dialog>
@@ -21,9 +26,8 @@ export function Scoring() {
             <DialogTitle>Punkteauswertung</DialogTitle>
           </DialogHeader>
           <DialogDescription>Siehe wer gewonnen hat</DialogDescription>
-          {/* Add the animated scoring diagram */}
           <div className="mt-4">
-            <AnimatedScoreDiagram />
+            <AnimatedScoreDiagram players={players} />
           </div>
         </DialogContent>
       </Dialog>

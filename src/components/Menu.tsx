@@ -11,7 +11,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Menu() {
+interface MenuProps {
+  resetAll: () => void;
+  resetAllPoints: () => void;
+}
+
+export function Menu({ resetAll, resetAllPoints }: MenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,11 +28,11 @@ export function Menu() {
         <DropdownMenuLabel>Optionen</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={resetAllPoints}>
             <RotateCcw />
             <span>Werte zurücksetzen</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={resetAll}>
             <Trash2 />
             <span>Alles zurücksetzen</span>
           </DropdownMenuItem>
