@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { EditPlayer } from "./EditPlayer";
+import pointsJson from "../../public/points.json";
 import {
   Select,
   SelectContent,
@@ -10,7 +11,7 @@ import {
 } from "./ui/select";
 interface PlayerCardProps {
   name: string;
-  points: number;
+  points: Record<string, number>;
   updatePoints: (points: number) => void;
   resetPoints: () => void;
   removePlayer: () => void;
@@ -41,11 +42,59 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           moveToLeft={moveToLeft}
         />
       </div>
-      {Array.from({ length: 6 }, (_, j) => (
-        <Select key={j}>
+      {["Einser", "Zweier", "Dreier", "Vierer", "Fünfer", "Sechser"].map(
+        (key, index) => (
+          <Select
+            key={index}
+            onValueChange={(value) => {
+              const numericValue = value === "X" ? 0 : parseInt(value, 10);
+              updatePoints(numericValue); // Update the points for this category
+            }}
+          >
+            <SelectTrigger className="w-full h-2">
+              <div className="flex w-full items-center">
+                {/* Use the player's current points for this category as the placeholder */}
+                <SelectValue placeholder={points[key] || key} />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem key="X" value="X">
+                  X
+                </SelectItem>
+                {pointsJson[key as keyof typeof pointsJson].map(
+                  (value: number, idx: number) => (
+                    <SelectItem key={idx} value={value.toString()}>
+                      {value}
+                    </SelectItem>
+                  )
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        )
+      )}
+      <div className="my-3">0</div>
+      {[
+        "Dreierpasch",
+        "Viererpasch",
+        "Full House",
+        "Kleine Straße",
+        "Große Straße",
+        "Kniffel",
+        "Chance",
+      ].map((key, index) => (
+        <Select
+          key={index}
+          onValueChange={(value) => {
+            const numericValue = value === "X" ? 0 : parseInt(value, 10);
+            updatePoints(numericValue); // Update the points for this category
+          }}
+        >
           <SelectTrigger className="w-full h-2">
             <div className="flex w-full items-center">
-              <SelectValue />
+              {/* Use the player's current points for this category as the placeholder */}
+              <SelectValue placeholder={points[key] || key} />
             </div>
           </SelectTrigger>
           <SelectContent>
@@ -53,31 +102,13 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
               <SelectItem key="X" value="X">
                 X
               </SelectItem>
-              {["Eins", "Zwei", "Drei", "Vier", "Fünf", "Sechs"].map((key) => (
-                <SelectItem key={key} value={key}>
-                  {key}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      ))}
-      <div className="my-3">0</div>
-      {Array.from({ length: 7 }, (_, j) => (
-        <Select key={j}>
-          <SelectTrigger className="w-full h-2">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem key="X" value="X">
-                X
-              </SelectItem>
-              {Array.from({ length: 31 }, (_, i) => (
-                <SelectItem key={i} value={i.toString()}>
-                  {i}
-                </SelectItem>
-              ))}
+              {pointsJson[key as keyof typeof pointsJson].map(
+                (value: number, idx: number) => (
+                  <SelectItem key={idx} value={value.toString()}>
+                    {value}
+                  </SelectItem>
+                )
+              )}
             </SelectGroup>
           </SelectContent>
         </Select>
