@@ -1,6 +1,8 @@
+"use client";
+
 import { Card } from "@/components/ui/card";
 import JSConfetti from "js-confetti";
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import pointsJson from "../../public/points.json";
 import { EditPlayer } from "./EditPlayer";
 import { Points } from "./hooks/types";
@@ -35,16 +37,21 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   moveToRight,
   moveToLeft,
 }) => {
-  const jsConfetti = useMemo(() => new JSConfetti(), []);
+  const [jsConfetti, setJsConfetti] = useState<JSConfetti | null>(null);
 
   useEffect(() => {
-    if (playerPoints["Kniffel"] === 50) {
+    if (typeof window !== "undefined") {
+      setJsConfetti(new JSConfetti());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (playerPoints["Kniffel"] === 50 && jsConfetti) {
       jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
     }
     return () => {
-      jsConfetti.clearCanvas();
+      jsConfetti?.clearCanvas();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerPoints["Kniffel"], jsConfetti]);
 
   return (
