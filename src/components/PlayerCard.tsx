@@ -1,6 +1,10 @@
 import { Card } from "@/components/ui/card";
-import { EditPlayer } from "./EditPlayer";
+import JSConfetti from "js-confetti";
+import { useEffect, useMemo } from "react";
 import pointsJson from "../../public/points.json";
+import { EditPlayer } from "./EditPlayer";
+import { Points } from "./hooks/types";
+import { Badge } from "./ui/badge";
 import {
   Select,
   SelectContent,
@@ -9,10 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+
 interface PlayerCardProps {
-  name: string;
-  points: Record<string, number>;
-  updatePoints: (points: number) => void;
+  playerName: string;
+  playerPoints: Record<string, number | "X">;
+  updatePoints: (points: Partial<Points>) => void;
   resetPoints: () => void;
   removePlayer: () => void;
   changeName: (name: string) => void;
@@ -21,8 +26,8 @@ interface PlayerCardProps {
 }
 
 const PlayerCard: React.FC<PlayerCardProps> = ({
-  name,
-  points,
+  playerName,
+  playerPoints,
   updatePoints,
   resetPoints,
   removePlayer,
@@ -30,11 +35,24 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   moveToRight,
   moveToLeft,
 }) => {
+  const jsConfetti = useMemo(() => new JSConfetti(), []);
+
+  useEffect(() => {
+    if (playerPoints["Kniffel"] === 50) {
+      jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
+    }
+    return () => {
+      jsConfetti.clearCanvas();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerPoints["Kniffel"], jsConfetti]);
+
   return (
-    <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px]">
+    <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px] h-full">
       <div className="flex flex-row justify-between w-full items-center mb-1">
-        <div>{name}</div>
+        <div>{playerName}</div>
         <EditPlayer
+          playerName={playerName}
           resetPoints={resetPoints}
           removePlayer={removePlayer}
           changeName={changeName}
@@ -46,22 +64,22 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
         (key, index) => (
           <Select
             key={index}
+            value={playerPoints[key] !== 0 ? playerPoints[key].toString() : ""}
             onValueChange={(value) => {
-              const numericValue = value === "X" ? 0 : parseInt(value, 10);
-              updatePoints(numericValue); // Update the points for this category
+              if (value === "reset") {
+                updatePoints({ [key]: 0 });
+              } else if (value === "X") {
+                updatePoints({ [key]: "X" });
+              } else {
+                updatePoints({ [key]: parseInt(value, 10) });
+              }
             }}
           >
             <SelectTrigger className="w-full h-2">
-              <div className="flex w-full items-center">
-                {/* Use the player's current points for this category as the placeholder */}
-                <SelectValue placeholder={points[key] || key} />
-              </div>
+              <SelectValue placeholder={key} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem key="X" value="X">
-                  X
-                </SelectItem>
                 {pointsJson[key as keyof typeof pointsJson].map(
                   (value: number, idx: number) => (
                     <SelectItem key={idx} value={value.toString()}>
@@ -70,11 +88,43 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                   )
                 )}
               </SelectGroup>
+              <SelectGroup>
+                <SelectItem value="reset" className="font-bold">
+                  Zurücksetzen
+                </SelectItem>
+                <SelectItem value="X" className="font-bold">
+                  ❌
+                </SelectItem>
+              </SelectGroup>
             </SelectContent>
           </Select>
         )
       )}
-      <div className="my-3">0</div>
+      <div className="my-3">
+        {(() => {
+          const sum = [
+            "Einser",
+            "Zweier",
+            "Dreier",
+            "Vierer",
+            "Fünfer",
+            "Sechser",
+          ].reduce(
+            (acc, key) =>
+              acc +
+              (typeof playerPoints[key] === "number" ? playerPoints[key] : 0),
+            0
+          );
+          return (
+            <div className="">
+              {sum}
+              {sum >= 63 && (
+                <Badge className="bg-green-600 ml-2 font-bold">+ 35</Badge>
+              )}
+            </div>
+          );
+        })()}
+      </div>
       {[
         "Dreierpasch",
         "Viererpasch",
@@ -86,22 +136,22 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       ].map((key, index) => (
         <Select
           key={index}
+          value={playerPoints[key] !== 0 ? playerPoints[key].toString() : ""}
           onValueChange={(value) => {
-            const numericValue = value === "X" ? 0 : parseInt(value, 10);
-            updatePoints(numericValue); // Update the points for this category
+            if (value === "reset") {
+              updatePoints({ [key]: 0 });
+            } else if (value === "X") {
+              updatePoints({ [key]: "X" });
+            } else {
+              updatePoints({ [key]: parseInt(value, 10) });
+            }
           }}
         >
           <SelectTrigger className="w-full h-2">
-            <div className="flex w-full items-center">
-              {/* Use the player's current points for this category as the placeholder */}
-              <SelectValue placeholder={points[key] || key} />
-            </div>
+            <SelectValue placeholder={key} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem key="X" value="X">
-                X
-              </SelectItem>
               {pointsJson[key as keyof typeof pointsJson].map(
                 (value: number, idx: number) => (
                   <SelectItem key={idx} value={value.toString()}>
@@ -109,6 +159,14 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                   </SelectItem>
                 )
               )}
+            </SelectGroup>
+            <SelectGroup>
+              <SelectItem value="reset" className="font-bold">
+                Zurücksetzen
+              </SelectItem>
+              <SelectItem value="X" className="font-bold">
+                ❌
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

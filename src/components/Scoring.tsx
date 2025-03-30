@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
 import AnimatedScoreDiagram from "./AnimatedScoreDiagram";
-import { Player } from "./hooks/useKniffel";
+import { Player } from "./hooks/types";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +18,7 @@ export function Scoring({ players }: ScoringProps) {
     <div className="hidden sm:block">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Punkteauswertung</Button>
+          <span>Punkteauswertung</span>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

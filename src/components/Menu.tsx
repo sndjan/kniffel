@@ -10,13 +10,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Scoring } from "./Scoring";
+import { Player } from "./hooks/types";
 
 interface MenuProps {
+  players: Player[];
   resetAll: () => void;
   resetAllPoints: () => void;
 }
 
-export function Menu({ resetAll, resetAllPoints }: MenuProps) {
+export function Menu({ players, resetAll, resetAllPoints }: MenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,9 +39,9 @@ export function Menu({ resetAll, resetAllPoints }: MenuProps) {
             <Trash2 />
             <span>Alles zurücksetzen</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={(e) => e.preventDefault()}>
             <Trophy />
-            <span>Punkteauswertung</span>
+            <Scoring players={players} />
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

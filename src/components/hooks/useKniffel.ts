@@ -1,36 +1,47 @@
-import { useEffect, useState } from "react";
-
-export type Player = {
-  id: number;
-  name: string;
-  points: Points;
-};
-
-export type Points = {
-  Einser: number;
-  Zweier: number;
-  Dreier: number;
-  Vierer: number;
-  Fünfer: number;
-  Sechser: number;
-  Dreierpasch: number;
-  Viererpasch: number;
-  "Full House": number;
-  "Kleine Straße": number;
-  "Große Straße": number;
-  Kniffel: number;
-  Chance: number;
-};
+import { useState } from "react";
+import { Player, Points } from "./types";
 
 export const useKniffel = () => {
-  const [players, setPlayers] = useState<Player[]>(() => {
-    const savedPlayers = localStorage.getItem("players");
-    return savedPlayers ? JSON.parse(savedPlayers) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("players", JSON.stringify(players));
-  }, [players]);
+  const [players, setPlayers] = useState<Player[]>([
+    {
+      id: Date.now(),
+      name: "Player 1",
+      points: {
+        Einser: 0,
+        Zweier: 0,
+        Dreier: 0,
+        Vierer: 0,
+        Fünfer: 0,
+        Sechser: 0,
+        Dreierpasch: 0,
+        Viererpasch: 0,
+        "Full House": 0,
+        "Kleine Straße": 0,
+        "Große Straße": 0,
+        Kniffel: 0,
+        Chance: 0,
+      },
+    },
+    {
+      id: Date.now() + 1,
+      name: "Player 2",
+      points: {
+        Einser: 0,
+        Zweier: 0,
+        Dreier: 0,
+        Vierer: 0,
+        Fünfer: 0,
+        Sechser: 0,
+        Dreierpasch: 0,
+        Viererpasch: 0,
+        "Full House": 0,
+        "Kleine Straße": 0,
+        "Große Straße": 0,
+        Kniffel: 0,
+        Chance: 0,
+      },
+    },
+  ]);
 
   const addPlayer = (name: string) => {
     setPlayers((prevPlayers) => [
@@ -58,6 +69,7 @@ export const useKniffel = () => {
   };
 
   const updatePoints = (playerId: number, points: Partial<Points>) => {
+    console.log("Updating points for player:", playerId, points);
     setPlayers((prevPlayers) =>
       prevPlayers.map((player) =>
         player.id === playerId
@@ -114,7 +126,8 @@ export const useKniffel = () => {
       if (index === -1 || index === prevPlayers.length - 1) return prevPlayers;
 
       const newPlayers = [...prevPlayers];
-      const [player] = newPlayers.splice(index, 1);
+      const player = newPlayers[index];
+      newPlayers.splice(index, 1);
       newPlayers.splice(index + 1, 0, player);
       return newPlayers;
     });
@@ -126,7 +139,8 @@ export const useKniffel = () => {
       if (index <= 0) return prevPlayers;
 
       const newPlayers = [...prevPlayers];
-      const [player] = newPlayers.splice(index, 1);
+      const player = newPlayers[index];
+      newPlayers.splice(index, 1);
       newPlayers.splice(index - 1, 0, player);
       return newPlayers;
     });

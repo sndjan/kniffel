@@ -1,15 +1,22 @@
 "use client";
-import { Player } from "@/components/hooks/useKniffel";
 import { useEffect, useState } from "react";
+import { Player } from "./hooks/types";
 
 interface AnimatedScoreDiagramProps {
   players: Player[];
 }
 
 export function AnimatedScoreDiagram({ players }: AnimatedScoreDiagramProps) {
-  const totalScores = players.map((player) =>
-    Object.values(player.points).reduce((sum, value) => sum + value, 0)
-  );
+  const totalScores = players.map((player) => {
+    const scores = Object.values(player.points).filter(
+      (value): value is number => typeof value === "number"
+    );
+    const firstSixSum = scores
+      .slice(0, 6)
+      .reduce((sum, value) => sum + value, 0);
+    const bonus = firstSixSum > 63 ? 35 : 0;
+    return scores.reduce((sum, value) => sum + value, 0) + bonus;
+  });
 
   const [animatedScores, setAnimatedScores] = useState(
     totalScores.map(() => 0)
