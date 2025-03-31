@@ -36,7 +36,7 @@ export default function Home() {
         <div className="flex flex-row space-x-4">
           <Dices size={32} strokeWidth={2.5} />
           <h1 className="scroll-m-20 sm:text-2xl mb-1 ml-1 font-extrabold tracking-tight lg:text-3xl text-xl">
-            Kniffel-Tracker
+            Würfelkarte
           </h1>
         </div>
         <div className="flex flex-row space-x-4">
@@ -63,7 +63,7 @@ export default function Home() {
                   updatePoints={(points: Partial<Points>) =>
                     updatePoints(player.id, points)
                   }
-                  resetPoints={() => resetPoints()}
+                  resetPoints={() => resetPoints(player.id)}
                   removePlayer={() => removePlayer(player.id)}
                   changeName={(name) => changeName(player.id, name)}
                   moveToRight={() => moveToRight(player.id)}
