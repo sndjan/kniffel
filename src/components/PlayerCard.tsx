@@ -48,7 +48,15 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   useEffect(() => {
     if (playerPoints["Kniffel"] === 50 && jsConfetti) {
       jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
-    } else if (
+    }
+    return () => {
+      jsConfetti?.clearCanvas();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerPoints["Kniffel"], jsConfetti]);
+
+  useEffect(() => {
+    if (
       playerPoints["Große Straße"] === 40 &&
       playerName === "Mama" &&
       jsConfetti
@@ -59,7 +67,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       jsConfetti?.clearCanvas();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerPoints["Kniffel"], playerPoints["Große Straße"], jsConfetti]);
+  }, [playerPoints["Große Straße"], jsConfetti]);
 
   return (
     <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px] h-full">
