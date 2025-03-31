@@ -50,6 +50,11 @@ export function AddPlayer({ addPlayer }: AddPlayerProps) {
             className="col-span-3"
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleAddPlayer();
+              }
+            }}
           />
         </div>
 

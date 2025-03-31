@@ -67,7 +67,7 @@ export function EditPlayer({
               <DialogTrigger asChild>
                 <span>Name bearbeiten</span>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-[425px] top-50">
                 <DialogHeader>
                   <DialogTitle>Name bearbeiten</DialogTitle>
                 </DialogHeader>
