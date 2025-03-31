@@ -52,6 +52,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     return () => {
       jsConfetti?.clearCanvas();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerPoints["Kniffel"], jsConfetti]);
 
   return (
