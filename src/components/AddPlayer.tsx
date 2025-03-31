@@ -34,7 +34,7 @@ export function AddPlayer({ addPlayer }: AddPlayerProps) {
           <UserRoundPlus />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] top-50">
         <DialogHeader>
           <DialogTitle>Spieler hinzufügen</DialogTitle>
         </DialogHeader>
