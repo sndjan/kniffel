@@ -1,45 +1,33 @@
 import { useState } from "react";
 import { Player, Points } from "./types";
 
+const initialPoints = {
+  Einser: 0,
+  Zweier: 0,
+  Dreier: 0,
+  Vierer: 0,
+  Fünfer: 0,
+  Sechser: 0,
+  Dreierpasch: 0,
+  Viererpasch: 0,
+  "Full House": 0,
+  "Kleine Straße": 0,
+  "Große Straße": 0,
+  Kniffel: 0,
+  Chance: 0,
+};
+
 export const useKniffel = () => {
   const [players, setPlayers] = useState<Player[]>([
     {
       id: Date.now(),
       name: "Player 1",
-      points: {
-        Einser: 0,
-        Zweier: 0,
-        Dreier: 0,
-        Vierer: 0,
-        Fünfer: 0,
-        Sechser: 0,
-        Dreierpasch: 0,
-        Viererpasch: 0,
-        "Full House": 0,
-        "Kleine Straße": 0,
-        "Große Straße": 0,
-        Kniffel: 0,
-        Chance: 0,
-      },
+      points: initialPoints,
     },
     {
       id: Date.now() + 1,
       name: "Player 2",
-      points: {
-        Einser: 0,
-        Zweier: 0,
-        Dreier: 0,
-        Vierer: 0,
-        Fünfer: 0,
-        Sechser: 0,
-        Dreierpasch: 0,
-        Viererpasch: 0,
-        "Full House": 0,
-        "Kleine Straße": 0,
-        "Große Straße": 0,
-        Kniffel: 0,
-        Chance: 0,
-      },
+      points: initialPoints,
     },
   ]);
 
@@ -49,21 +37,7 @@ export const useKniffel = () => {
       {
         id: Date.now(),
         name,
-        points: {
-          Einser: 0,
-          Zweier: 0,
-          Dreier: 0,
-          Vierer: 0,
-          Fünfer: 0,
-          Sechser: 0,
-          Dreierpasch: 0,
-          Viererpasch: 0,
-          "Full House": 0,
-          "Kleine Straße": 0,
-          "Große Straße": 0,
-          Kniffel: 0,
-          Chance: 0,
-        },
+        points: initialPoints,
       },
     ]);
   };
@@ -85,21 +59,7 @@ export const useKniffel = () => {
         playerId === undefined || player.id === playerId
           ? {
               ...player,
-              points: {
-                Einser: 0,
-                Zweier: 0,
-                Dreier: 0,
-                Vierer: 0,
-                Fünfer: 0,
-                Sechser: 0,
-                Dreierpasch: 0,
-                Viererpasch: 0,
-                "Full House": 0,
-                "Kleine Straße": 0,
-                "Große Straße": 0,
-                Kniffel: 0,
-                Chance: 0,
-              },
+              points: initialPoints,
             }
           : player
       )
@@ -150,21 +110,7 @@ export const useKniffel = () => {
     setPlayers((prevPlayers) =>
       prevPlayers.map((player) => ({
         ...player,
-        points: {
-          Einser: 0,
-          Zweier: 0,
-          Dreier: 0,
-          Vierer: 0,
-          Fünfer: 0,
-          Sechser: 0,
-          Dreierpasch: 0,
-          Viererpasch: 0,
-          "Full House": 0,
-          "Kleine Straße": 0,
-          "Große Straße": 0,
-          Kniffel: 0,
-          Chance: 0,
-        },
+        points: initialPoints,
       }))
     );
   };
