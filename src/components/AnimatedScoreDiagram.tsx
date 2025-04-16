@@ -14,7 +14,7 @@ export function AnimatedScoreDiagram({ players }: AnimatedScoreDiagramProps) {
     const firstSixSum = scores
       .slice(0, 6)
       .reduce((sum, value) => sum + value, 0);
-    const bonus = firstSixSum > 63 ? 35 : 0;
+    const bonus = firstSixSum >= 63 ? 35 : 0;
     return scores.reduce((sum, value) => sum + value, 0) + bonus;
   });
 
