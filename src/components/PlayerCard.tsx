@@ -97,7 +97,15 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
               }
             }}
           >
-            <SelectTrigger className="w-full h-2">
+            <SelectTrigger
+              className={`w-full h-2 ${
+                playerPoints[key] === "X"
+                  ? "bg-red-100"
+                  : playerPoints[key] === 0 || playerPoints[key] === undefined
+                  ? "bg-white"
+                  : "bg-gray-100"
+              }`}
+            >
               <SelectValue placeholder={key} />
             </SelectTrigger>
             <SelectContent>
@@ -138,7 +146,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             0
           );
           return (
-            <div className="">
+            <div>
               {sum}
               {sum >= 63 && (
                 <Badge className="bg-green-600 ml-2 font-bold">+ 35</Badge>
@@ -169,7 +177,15 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
             }
           }}
         >
-          <SelectTrigger className="w-full h-2">
+          <SelectTrigger
+            className={`w-full h-2 ${
+              playerPoints[key] === "X"
+                ? "bg-red-100"
+                : playerPoints[key] === 0 || playerPoints[key] === undefined
+                ? "bg-white"
+                : "bg-gray-100"
+            }`}
+          >
             <SelectValue placeholder={key} />
           </SelectTrigger>
           <SelectContent>
