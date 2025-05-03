@@ -8,14 +8,25 @@ interface AnimatedScoreDiagramProps {
 
 export function AnimatedScoreDiagram({ players }: AnimatedScoreDiagramProps) {
   const totalScores = players.map((player) => {
-    const scores = Object.values(player.points).filter(
-      (value): value is number => typeof value === "number"
-    );
-    const firstSixSum = scores
-      .slice(0, 6)
-      .reduce((sum, value) => sum + value, 0);
-    const bonus = firstSixSum >= 63 ? 35 : 0;
-    return scores.reduce((sum, value) => sum + value, 0) + bonus;
+    const firstSixSum = [
+      player.points.Einser,
+      player.points.Zweier,
+      player.points.Dreier,
+      player.points.Vierer,
+      player.points.Fünfer,
+      player.points.Sechser,
+    ].reduce<number>((sum, value) => {
+      return sum + (typeof value === "number" ? value : 0);
+    }, 0);
+
+    const bonus = Number(firstSixSum) >= 63 ? 35 : 0;
+
+    const totalScore =
+      Object.values(player.points).reduce<number>((sum, value) => {
+        return sum + (typeof value === "number" ? value : 0);
+      }, 0) + bonus;
+
+    return totalScore;
   });
 
   const [animatedScores, setAnimatedScores] = useState(
