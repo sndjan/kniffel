@@ -17,19 +17,21 @@ const initialPoints = {
   Chance: 0,
 };
 
+const initialPlayers = [
+  {
+    id: Date.now(),
+    name: "Player 1",
+    points: initialPoints,
+  },
+  {
+    id: Date.now() + 1,
+    name: "Player 2",
+    points: initialPoints,
+  },
+];
+
 export const useKniffel = () => {
-  const [players, setPlayers] = useState<Player[]>([
-    {
-      id: Date.now(),
-      name: "Player 1",
-      points: initialPoints,
-    },
-    {
-      id: Date.now() + 1,
-      name: "Player 2",
-      points: initialPoints,
-    },
-  ]);
+  const [players, setPlayers] = useState<Player[]>(initialPlayers);
 
   const addPlayer = (name: string) => {
     setPlayers((prevPlayers) => [
@@ -116,7 +118,7 @@ export const useKniffel = () => {
   };
 
   const resetAll = () => {
-    setPlayers([]);
+    setPlayers(initialPlayers);
   };
 
   return {

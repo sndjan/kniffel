@@ -6,20 +6,18 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 
 interface ScoringProps {
   players: Player[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function Scoring({ players }: ScoringProps) {
+export function Scoring({ players, open, onOpenChange }: ScoringProps) {
   return (
     <div className="hidden sm:block">
-      <Dialog>
-        <DialogTrigger asChild>
-          <span>Punkteauswertung</span>
-        </DialogTrigger>
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Punkteauswertung</DialogTitle>
