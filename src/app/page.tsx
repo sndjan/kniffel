@@ -53,10 +53,10 @@ export default function Home() {
       </Card>
       <div className="flex">
         <CategoryIcons addPlayer={addPlayer} />
-        <Carousel className="w-full">
-          <CarouselContent className="-ml-6">
+        <Carousel className="w-full mx-4">
+          <CarouselContent className="-ml-4">
             {players.map((player, index) => (
-              <CarouselItem key={index} className="flex-1 pl-2">
+              <CarouselItem key={index} className="pl-4 basis-1/2">
                 <PlayerCard
                   playerName={player.name}
                   playerPoints={player.points}

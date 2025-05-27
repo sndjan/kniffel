@@ -20,7 +20,7 @@ interface CategoryIconsProps {
 
 export function CategoryIcons({ addPlayer }: CategoryIconsProps) {
   return (
-    <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px]">
+    <Card className="p-4 ml-4 flex-col justify-between items-center space-y-[-15px] hidden sm:flex">
       <AddPlayer addPlayer={addPlayer}></AddPlayer>
       <Dice1 />
       <Dice2 />

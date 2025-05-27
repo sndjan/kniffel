@@ -70,7 +70,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   }, [playerPoints["Große Straße"], jsConfetti]);
 
   return (
-    <Card className="mx-4 p-4 flex flex-col justify-between items-center space-y-[-15px] h-full">
+    <Card className="p-4 flex flex-col justify-between items-center space-y-[-15px] h-full">
       <div className="flex flex-row justify-between w-full items-center mb-1">
         <div>{playerName}</div>
         <EditPlayer
