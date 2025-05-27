@@ -54,12 +54,16 @@ export default function Home() {
           </h1>
         </div>
         <div className="flex flex-row">
-          <Button variant="outline" className="mr-4 hidden sm:block">
+          <Button
+            variant="outline"
+            className="mr-4 hidden sm:block"
+            onClick={() => setShowScoring(true)}
+          >
             Punkteauswertung
             <Scoring
               players={players}
               open={showScoring}
-              onOpenChange={setShowScoring}
+              onOpenChange={(value) => setShowScoring(value)}
             />
           </Button>
           <div className="mr-4">
@@ -72,6 +76,8 @@ export default function Home() {
             players={players}
             resetAll={resetAll}
             resetAllPoints={resetAllPoints}
+            open={showScoring}
+            onOpenChange={setShowScoring}
           />
         </div>
       </Card>

@@ -16,18 +16,16 @@ interface ScoringProps {
 
 export function Scoring({ players, open, onOpenChange }: ScoringProps) {
   return (
-    <div className="hidden sm:block">
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Punkteauswertung</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>Siehe wer gewonnen hat</DialogDescription>
-          <div className="mt-4">
-            <AnimatedScoreDiagram players={players} />
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Punkteauswertung</DialogTitle>
+        </DialogHeader>
+        <DialogDescription>Siehe wer gewonnen hat</DialogDescription>
+        <div className="mt-4">
+          <AnimatedScoreDiagram players={players} />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

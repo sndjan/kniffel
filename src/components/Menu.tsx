@@ -6,7 +6,6 @@ import {
   Trash2,
   Trophy,
 } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,11 +24,18 @@ interface MenuProps {
   players: Player[];
   resetAll: () => void;
   resetAllPoints: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function Menu({ players, resetAll, resetAllPoints }: MenuProps) {
+export function Menu({
+  players,
+  resetAll,
+  resetAllPoints,
+  open,
+  onOpenChange,
+}: MenuProps) {
   const { theme, setTheme } = useTheme();
-  const [showScoring, setShowScoring] = useState(false);
 
   return (
     <>
@@ -51,7 +57,7 @@ export function Menu({ players, resetAll, resetAllPoints }: MenuProps) {
               <Trash2 />
               <span>Alles zurücksetzen</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setShowScoring(true)}>
+            <DropdownMenuItem onSelect={() => onOpenChange(true)}>
               <Trophy />
               <span>Punkteauswertung</span>
             </DropdownMenuItem>
@@ -74,11 +80,7 @@ export function Menu({ players, resetAll, resetAllPoints }: MenuProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Scoring
-        players={players}
-        open={showScoring}
-        onOpenChange={setShowScoring}
-      />
+      <Scoring players={players} open={open} onOpenChange={onOpenChange} />
     </>
   );
 }
