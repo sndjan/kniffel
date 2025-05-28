@@ -22,9 +22,9 @@ const allKniffel = [
   5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
   26, 27, 28, 29, 30,
 ];
-// const allKniffelMini = [
-//   3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-// ];
+const allKniffelMini = [
+  3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+];
 const allKniffelPlus = [
   6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
   26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
@@ -74,19 +74,20 @@ export const gamemodes: Record<string, GamemodeConfig> = {
     description:
       "Kompakte Version mit nur 3 Würfeln. Schnelle, spannende Runden.",
     fields: [
-      { key: "Einser", label: "Einser", options: [1, 2, 3] },
-      { key: "Zweier", label: "Zweier", options: [2, 4, 6] },
-      { key: "Dreier", label: "Dreier", options: [3, 6, 9] },
-      { key: "Kleines Full House", label: "Kleines Full House", options: [15] },
-      { key: "Kleine Straße", label: "Kleine Straße", options: [20] },
-      { key: "Kniffel Mini", label: "Kniffel Mini", options: [30] },
-      { key: "Chance", label: "Chance", options: [3, 4, 5, 6, 7, 8, 9] },
+      { key: "Vierer", label: "Vierer", options: [4, 8, 12] },
+      { key: "Fünfer", label: "Fünfer", options: [5, 10, 15] },
+      { key: "Sechser", label: "Sechser", options: [6, 12, 18] },
+      { key: "Zweierpasch", label: "Zweierpasch", options: allKniffelMini },
+      { key: "Mini Full House", label: "Mini Full House", options: [15] },
+      { key: "Mini Straße", label: "Mini Straße", options: [20] },
+      { key: "Mini Kniffel", label: "Mini Kniffel", options: [30] },
+      { key: "Chance", label: "Chance", options: allKniffelMini },
     ],
     bonus: {
       label: "",
-      fields: ["Einser", "Zweier", "Dreier"],
-      minSum: 20,
-      bonus: 10,
+      fields: ["Dreier", "Vierer", "Fünfer", "Sechser"],
+      minSum: 30,
+      bonus: 15,
     },
   },
   KniffelPlus: {
@@ -115,11 +116,12 @@ export const gamemodes: Record<string, GamemodeConfig> = {
         label: "Fünferpasch",
         options: allKniffelPlus,
       },
-      { key: "Full House", label: "Full House", options: [25, 30] },
-      { key: "Packed House", label: "Packed House", options: [35] },
-      { key: "Kleine Straße", label: "Kleine Straße", options: [30, 35] },
-      { key: "Große Straße", label: "Große Straße", options: [40, 45] },
-      { key: "Kniffel", label: "Kniffel", options: [50, 60] },
+      { key: "Full House", label: "Full House", options: [25] },
+      { key: "Full Villa", label: "Full Villa", options: [35] },
+      { key: "Kleine Straße", label: "Kleine Straße", options: [30] },
+      { key: "Große Straße", label: "Große Straße", options: [35] },
+      { key: "Kniffel", label: "Kniffel", options: [50] },
+      { key: "Kniffel+", label: "Kniffel+", options: [100] },
       {
         key: "Chance",
         label: "Chance",
@@ -129,7 +131,7 @@ export const gamemodes: Record<string, GamemodeConfig> = {
     bonus: {
       label: "",
       fields: ["Einser", "Zweier", "Dreier", "Vierer", "Fünfer", "Sechser"],
-      minSum: 90,
+      minSum: 84,
       bonus: 50,
     },
   },
