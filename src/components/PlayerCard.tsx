@@ -1,6 +1,8 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import JSConfetti from "js-confetti";
+import { useEffect, useState } from "react";
 import pointsJson from "../../public/points.json";
 import { EditPlayer } from "./EditPlayer";
 import { gamemodes } from "./gamemodes/gamemodes";
@@ -38,6 +40,39 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   gamemode,
 }) => {
   const config = gamemodes[gamemode];
+
+  // TODO: make this configurable
+  const [jsConfetti, setJsConfetti] = useState<JSConfetti | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setJsConfetti(new JSConfetti());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (playerPoints["Kniffel"] === 50 && jsConfetti) {
+      jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
+    }
+    return () => {
+      jsConfetti?.clearCanvas();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerPoints["Kniffel"], jsConfetti]);
+
+  useEffect(() => {
+    if (
+      playerPoints["Große Straße"] === 40 &&
+      playerName === "Mama" &&
+      jsConfetti
+    ) {
+      jsConfetti.addConfetti({ emojis: ["🌟", "🎉"] });
+    }
+    return () => {
+      jsConfetti?.clearCanvas();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerPoints["Große Straße"], jsConfetti]);
 
   let bonusValue = 0;
   let bonusReached = false;

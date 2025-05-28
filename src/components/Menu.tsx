@@ -21,12 +21,12 @@ import { Player } from "./hooks/types";
 import { Scoring } from "./Scoring";
 
 interface MenuProps {
-  players: Player[];
-  resetAll: () => void;
-  resetAllPoints: () => void;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  gamemode: string;
+  players?: Player[];
+  resetAll?: () => void;
+  resetAllPoints?: () => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  gamemode?: string;
 }
 
 export function Menu({
@@ -51,18 +51,24 @@ export function Menu({
           <DropdownMenuLabel>Optionen</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem onSelect={resetAllPoints}>
-              <RotateCcw />
-              <span>Werte zurücksetzen</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={resetAll}>
-              <Trash2 />
-              <span>Alles zurücksetzen</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => onOpenChange(true)}>
-              <Trophy />
-              <span>Punkteauswertung</span>
-            </DropdownMenuItem>
+            {resetAllPoints && (
+              <DropdownMenuItem onSelect={resetAllPoints}>
+                <RotateCcw />
+                <span>Werte zurücksetzen</span>
+              </DropdownMenuItem>
+            )}
+            {resetAll && (
+              <DropdownMenuItem onSelect={resetAll}>
+                <Trash2 />
+                <span>Alles zurücksetzen</span>
+              </DropdownMenuItem>
+            )}
+            {onOpenChange && (
+              <DropdownMenuItem onSelect={() => onOpenChange(true)}>
+                <Trophy />
+                <span>Punkteauswertung</span>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               onSelect={() => setTheme(theme === "light" ? "dark" : "light")}
             >
@@ -82,12 +88,14 @@ export function Menu({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Scoring
-        players={players}
-        open={open}
-        onOpenChange={onOpenChange}
-        gamemode={gamemode}
-      />
+      {gamemode && players && open && onOpenChange && (
+        <Scoring
+          players={players}
+          open={open}
+          onOpenChange={onOpenChange}
+          gamemode={gamemode}
+        />
+      )}
     </>
   );
 }
