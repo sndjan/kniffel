@@ -31,8 +31,9 @@ export default function Home() {
   } = useKniffel();
 
   const [showScoring, setShowScoring] = useState(false);
-
   const [isMobile, setIsMobile] = useState(true);
+
+  const gamemode = "Kniffel+";
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,6 +65,7 @@ export default function Home() {
               players={players}
               open={showScoring}
               onOpenChange={(value) => setShowScoring(value)}
+              gamemode={gamemode}
             />
           </Button>
           <div className="mr-4">
@@ -78,6 +80,7 @@ export default function Home() {
             resetAllPoints={resetAllPoints}
             open={showScoring}
             onOpenChange={setShowScoring}
+            gamemode={gamemode}
           />
         </div>
       </Card>
@@ -105,6 +108,7 @@ export default function Home() {
                     changeName={(name) => changeName(player.id, name)}
                     moveToRight={() => moveToRight(player.id)}
                     moveToLeft={() => moveToLeft(player.id)}
+                    gamemode={gamemode}
                   />
                 </CarouselItem>
               );

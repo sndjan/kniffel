@@ -1,11 +1,3 @@
-import {
-  EllipsisVertical,
-  Moon,
-  RotateCcw,
-  Sun,
-  Trash2,
-  Trophy,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,9 +8,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  EllipsisVertical,
+  Moon,
+  RotateCcw,
+  Sun,
+  Trash2,
+  Trophy,
+} from "lucide-react";
+import { useTheme } from "next-themes";
 import { Player } from "./hooks/types";
 import { Scoring } from "./Scoring";
-import { useTheme } from "next-themes";
 
 interface MenuProps {
   players: Player[];
@@ -26,6 +26,7 @@ interface MenuProps {
   resetAllPoints: () => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  gamemode: string;
 }
 
 export function Menu({
@@ -34,6 +35,7 @@ export function Menu({
   resetAllPoints,
   open,
   onOpenChange,
+  gamemode,
 }: MenuProps) {
   const { theme, setTheme } = useTheme();
 
@@ -80,7 +82,12 @@ export function Menu({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Scoring players={players} open={open} onOpenChange={onOpenChange} />
+      <Scoring
+        players={players}
+        open={open}
+        onOpenChange={onOpenChange}
+        gamemode={gamemode}
+      />
     </>
   );
 }

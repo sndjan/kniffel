@@ -1,31 +1,44 @@
 "use client";
 import { useEffect, useState } from "react";
+import { gamemodes } from "./gamemodes/gamemodes";
 import { Player } from "./hooks/types";
 
 interface AnimatedScoreDiagramProps {
   players: Player[];
+  gamemode: keyof typeof gamemodes;
 }
 
-export function AnimatedScoreDiagram({ players }: AnimatedScoreDiagramProps) {
+export function AnimatedScoreDiagram({
+  players,
+  gamemode,
+}: AnimatedScoreDiagramProps) {
+  const config = gamemodes[gamemode];
+
   const totalScores = players.map((player) => {
-    const firstSixSum = [
-      player.points.Einser,
-      player.points.Zweier,
-      player.points.Dreier,
-      player.points.Vierer,
-      player.points.Fünfer,
-      player.points.Sechser,
-    ].reduce<number>((sum, value) => {
-      return sum + (typeof value === "number" ? value : 0);
-    }, 0);
-
-    const bonus = Number(firstSixSum) >= 63 ? 35 : 0;
-
+    let bonus = 0;
+    let sum = 0;
+    if (config?.bonus) {
+      sum = config.bonus.fields.reduce(
+        (acc, key) =>
+          acc +
+          (typeof player.points[key as keyof typeof player.points] === "number"
+            ? (player.points[key as keyof typeof player.points] as number)
+            : 0),
+        0
+      );
+      if (sum >= config.bonus.minSum) {
+        bonus = config.bonus.bonus;
+      }
+    }
     const totalScore =
-      Object.values(player.points).reduce<number>((sum, value) => {
-        return sum + (typeof value === "number" ? value : 0);
-      }, 0) + bonus;
-
+      config?.fields.reduce(
+        (acc, { key }) =>
+          acc +
+          (typeof player.points[key as keyof typeof player.points] === "number"
+            ? (player.points[key as keyof typeof player.points] as number)
+            : 0),
+        0
+      ) + bonus;
     return totalScore;
   });
 
