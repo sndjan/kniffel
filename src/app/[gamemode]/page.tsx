@@ -17,11 +17,12 @@ import {
 } from "@/components/ui/carousel";
 import { Dices } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const params = useParams();
+  const router = useRouter();
   const param = (params.gamemode as string) || "";
   const gamemode =
     (Object.keys(gamemodes).find(
@@ -30,6 +31,10 @@ export default function Home() {
         param.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()
     ) as keyof typeof gamemodes) || "Kniffel+";
 
+  // Always call hooks at the top
+  const [purchased, setPurchased] = useState<string[] | null>(null);
+  const [showScoring, setShowScoring] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   const {
     players,
     addPlayer,
@@ -43,18 +48,41 @@ export default function Home() {
     resetAllPoints,
   } = useKniffel();
 
-  const [showScoring, setShowScoring] = useState(false);
-  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const bought = localStorage.getItem("purchasedGamemodes");
+      setPurchased(bought ? JSON.parse(bought) : ["kniffel"]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (purchased === null) return;
+    const normalizedKey = param.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+    const modePrice = gamemodes[gamemode]?.price ?? 0;
+    const isUnlocked = modePrice === 0 || purchased.includes(normalizedKey);
+    if (!isUnlocked) {
+      router.replace(`/checkout/${normalizedKey}`);
+    }
+  }, [purchased, param, gamemode, router]);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 640); // Tailwind's "sm" breakpoint
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  if (purchased === null) {
+    return null; // or loading spinner
+  }
+  const normalizedKey = param.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  const modePrice = gamemodes[gamemode]?.price ?? 0;
+  const isUnlocked = modePrice === 0 || purchased.includes(normalizedKey);
+  if (!isUnlocked) {
+    return null;
+  }
 
   return (
     <>

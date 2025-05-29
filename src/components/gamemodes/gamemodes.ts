@@ -17,6 +17,7 @@ export type GamemodeConfig = {
   bonus?: BonusConfig;
   description?: string;
   information?: string[];
+  price?: number; // Add price property
 };
 
 const allKniffel = [
@@ -64,6 +65,7 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       minSum: 63,
       bonus: 35,
     },
+    price: 0, // Free
   },
   MiniKniffel: {
     name: "Mini-Kniffel",
@@ -92,6 +94,7 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       minSum: 30,
       bonus: 15,
     },
+    price: 1.99, // Example price
   },
   KniffelPlus: {
     name: "KniffelPlus",
@@ -139,5 +142,6 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       minSum: 84,
       bonus: 50,
     },
+    price: 2.99, // Example price
   },
 };
