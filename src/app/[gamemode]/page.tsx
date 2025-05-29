@@ -1,6 +1,7 @@
 "use client";
 
 import AddPlayer from "@/components/AddPlayer";
+import GamemodeInfo from "@/components/GamemodeInfo";
 import { gamemodes } from "@/components/gamemodes/gamemodes";
 import { Points } from "@/components/hooks/types";
 import { useKniffel } from "@/components/hooks/useKniffel";
@@ -60,8 +61,8 @@ export default function Home() {
       <Card className="m-4 p-4 flex flex-row justify-between items-center">
         <Link href="/" className="flex flex-row ">
           <Dices size={32} strokeWidth={2.5} />
-          <h1 className="scroll-m-20 sm:text-2xl mb-1 ml-4 font-extrabold tracking-tight lg:text-3xl text-xl">
-            Würfelkarte
+          <h1 className="scroll-m-20 sm:text-2xl mb-1 ml-4 font-extrabold tracking-tight lg:text-3xl text-xl mr-4">
+            {gamemodes[gamemode].name}
           </h1>
         </Link>
         <div className="flex flex-row">
@@ -81,6 +82,11 @@ export default function Home() {
           <div className="mr-4">
             <AddPlayer addPlayer={addPlayer} />
           </div>
+          {gamemodes[gamemode].information && (
+            <div className="mr-4 hidden sm:block">
+              <GamemodeInfo gamemodeInfo={gamemodes[gamemode].information} />
+            </div>
+          )}
           {/* <div className="hidden sm:block flex-row mr-4">
             <ModeToggle />
           </div> */}

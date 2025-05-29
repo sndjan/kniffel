@@ -33,7 +33,10 @@ export default function GamemodeSelect() {
               <div className="text-gray-500 text-sm mb-2 flex-1 flex items-center justify-center text-center">
                 {mode.description}
               </div>
-              <Button variant="outline">Auswählen</Button>
+              <Button variant="outline">
+                <Dices size={20} className="mr-2" />
+                Spielen
+              </Button>
             </Card>
           </Link>
         ))}

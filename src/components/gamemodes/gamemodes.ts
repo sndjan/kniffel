@@ -15,7 +15,8 @@ export type GamemodeConfig = {
   name: string;
   fields: PointField[];
   bonus?: BonusConfig;
-  description?: string; // Add description for gamemode cards
+  description?: string;
+  information?: string[];
 };
 
 const allKniffel = [
@@ -29,11 +30,6 @@ const allKniffelPlus = [
   6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
   26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
 ];
-// const allKniffelMega = [
-//   8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-//   28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
-//   47, 48,
-// ];
 
 export const gamemodes: Record<string, GamemodeConfig> = {
   Kniffel: {
@@ -72,13 +68,20 @@ export const gamemodes: Record<string, GamemodeConfig> = {
   MiniKniffel: {
     name: "Mini-Kniffel",
     description:
-      "Kompakte Version mit nur 3 Würfeln. Schnelle, spannende Runden.",
+      "Kompakte Version mit nur 3 Würfeln. Für schnelle und spannende Runden.",
+    information: [
+      "Mini-Kniffel ist eine vereinfachte Version des klassischen Kniffels mit folgenden Änderungen:",
+      "• Es werden nur 3 Würfel statt 5 verwendet.",
+      "• Die Kategorien sind reduziert und passen zu den 3 Würfeln.",
+      "• Die Punktewerte sind niedriger, um die schnelle Spielweise zu unterstützen.",
+      "• Der Bonus für die oberen Felder ist auf 15 Punkte (also jeweils zwei pro Zahl) festgelegt.",
+    ],
     fields: [
       { key: "Vierer", label: "Vierer", options: [4, 8, 12] },
       { key: "Fünfer", label: "Fünfer", options: [5, 10, 15] },
       { key: "Sechser", label: "Sechser", options: [6, 12, 18] },
       { key: "Zweierpasch", label: "Zweierpasch", options: allKniffelMini },
-      { key: "Mini Full House", label: "Mini Full House", options: [15] },
+      { key: "Tiny House", label: "Tiny House", options: [15] },
       { key: "Mini Straße", label: "Mini Straße", options: [20] },
       { key: "Mini Kniffel", label: "Mini Kniffel", options: [30] },
       { key: "Chance", label: "Chance", options: allKniffelMini },
@@ -93,7 +96,15 @@ export const gamemodes: Record<string, GamemodeConfig> = {
   KniffelPlus: {
     name: "KniffelPlus",
     description:
-      "Erweiterter Modus mit 6 Würfeln, mehr Kategorien und Punkten.",
+      "Erweiterter Modus mit 6 Würfeln, spannenden Kategorien und viel mehr Punkten.",
+    information: [
+      "KniffelPlus unterscheidet sich vom klassischen Kniffel in folgenden Punkten:",
+      "• Es werden 6 Würfel statt 5 verwendet.",
+      "• Die Zahlenfelder (Einser bis Sechser) können höhere Summen erreichen.",
+      "• Neue Kategorien wie 'Fünferpasch', 'Dreifach-Paar', 'Full Villa' (zwei mal drei gleiche) und 'Riesige Straße' kommen hinzu.",
+      "• Der Kniffel+ ist mit 100 Punkten deutlich höher bewertet.",
+      "• Die Anforderungen für den Bonus steigen (mindestens 84 Punkte in den oberen Feldern, also jeweils vier pro Zahl).",
+    ],
     fields: [
       { key: "Einser", label: "Einser", options: [1, 2, 3, 4, 5, 6] },
       { key: "Zweier", label: "Zweier", options: [2, 4, 6, 8, 10, 12] },
@@ -101,11 +112,6 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       { key: "Vierer", label: "Vierer", options: [4, 8, 12, 16, 20, 24] },
       { key: "Fünfer", label: "Fünfer", options: [5, 10, 15, 20, 25, 30] },
       { key: "Sechser", label: "Sechser", options: [6, 12, 18, 24, 30, 36] },
-      {
-        key: "Dreierpasch",
-        label: "Dreierpasch",
-        options: allKniffelPlus,
-      },
       {
         key: "Viererpasch",
         label: "Viererpasch",
@@ -116,11 +122,10 @@ export const gamemodes: Record<string, GamemodeConfig> = {
         label: "Fünferpasch",
         options: allKniffelPlus,
       },
-      { key: "Full House", label: "Full House", options: [25] },
-      { key: "Full Villa", label: "Full Villa", options: [35] },
-      { key: "Kleine Straße", label: "Kleine Straße", options: [30] },
-      { key: "Große Straße", label: "Große Straße", options: [35] },
-      { key: "Kniffel", label: "Kniffel", options: [50] },
+      { key: "Dreifach-Paar", label: "Dreifach-Paar", options: [30] },
+      { key: "Full Villa", label: "Full Villa", options: [45] },
+      { key: "Große Straße", label: "Große Straße", options: [40] },
+      { key: "Riesige Straße", label: "Riesige Straße", options: [55] },
       { key: "Kniffel+", label: "Kniffel+", options: [100] },
       {
         key: "Chance",
@@ -133,37 +138,6 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       fields: ["Einser", "Zweier", "Dreier", "Vierer", "Fünfer", "Sechser"],
       minSum: 84,
       bonus: 50,
-    },
-  },
-  MegaKniffel: {
-    name: "Mega-Kniffel",
-    description: "Ein Modus mit 8 Würfeln – für Mega-Punkte und mehr Kombos!",
-    fields: [
-      { key: "Einser", label: "Einser", options: [1, 2, 3, 4, 5, 6, 7, 8] },
-      { key: "Zweier", label: "Zweier", options: [2, 4, 6, 8, 10, 12, 14, 16] },
-      {
-        key: "Vierer",
-        label: "Vierer",
-        options: [4, 8, 12, 16, 20, 24, 28, 32],
-      },
-      {
-        key: "Sechser",
-        label: "Sechser",
-        options: [6, 12, 18, 24, 30, 36, 42, 48],
-      },
-      { key: "Mega Straße", label: "Mega Straße", options: [50] },
-      { key: "Super-Kniffel", label: "Super-Kniffel", options: [100] },
-      {
-        key: "Mega Chance",
-        label: "Mega Chance",
-        options: [10, 20, 30, 40, 50, 60, 70, 80],
-      },
-    ],
-    bonus: {
-      label: "",
-      fields: ["Einser", "Zweier", "Vierer", "Sechser"],
-      minSum: 120,
-      bonus: 60,
     },
   },
 };

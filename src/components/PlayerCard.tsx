@@ -51,7 +51,12 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   }, []);
 
   useEffect(() => {
-    if (playerPoints["Kniffel"] === 50 && jsConfetti) {
+    if (
+      (playerPoints["Kniffel"] === 50 ||
+        playerPoints["Kniffel+"] === 50 ||
+        playerPoints["Mini Kniffel"] === 50) &&
+      jsConfetti
+    ) {
       jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
     }
     return () => {
