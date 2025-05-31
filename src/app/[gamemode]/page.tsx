@@ -46,7 +46,7 @@ export default function Home() {
     moveToLeft,
     resetAll,
     resetAllPoints,
-  } = useKniffel();
+  } = useKniffel(gamemode);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

@@ -2,6 +2,7 @@ export type Player = {
   id: number;
   name: string;
   points: Points;
+  score: number; // final score including bonus
 };
 
 export type Points = {

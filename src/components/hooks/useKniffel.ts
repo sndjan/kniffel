@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { gamemodes } from "../gamemodes/gamemodes";
 import { Player, Points } from "./types";
 
 const initialPoints = {
@@ -30,8 +31,45 @@ const initialPlayers = [
   },
 ];
 
-export const useKniffel = () => {
-  const [players, setPlayers] = useState<Player[]>(initialPlayers);
+function calculateScore(
+  points: Points,
+  gamemode: keyof typeof gamemodes
+): number {
+  const config = gamemodes[gamemode];
+  let bonus = 0;
+  let sum = 0;
+  if (config?.bonus) {
+    sum = config.bonus.fields.reduce(
+      (acc, key) =>
+        acc +
+        (typeof points[key as keyof typeof points] === "number"
+          ? (points[key as keyof typeof points] as number)
+          : 0),
+      0
+    );
+    if (sum >= config.bonus.minSum) {
+      bonus = config.bonus.bonus;
+    }
+  }
+  const totalScore =
+    config?.fields.reduce(
+      (acc, { key }) =>
+        acc +
+        (typeof points[key as keyof typeof points] === "number"
+          ? (points[key as keyof typeof points] as number)
+          : 0),
+      0
+    ) + bonus;
+  return totalScore;
+}
+
+export const useKniffel = (gamemode: keyof typeof gamemodes = "Kniffel") => {
+  const [players, setPlayers] = useState<Player[]>(
+    initialPlayers.map((p) => ({
+      ...p,
+      score: calculateScore(p.points, gamemode),
+    }))
+  );
 
   const addPlayer = (name: string) => {
     setPlayers((prevPlayers) => [
@@ -40,18 +78,24 @@ export const useKniffel = () => {
         id: Date.now(),
         name,
         points: initialPoints,
+        score: calculateScore(initialPoints, gamemode),
       },
     ]);
   };
 
   const updatePoints = (playerId: number, points: Partial<Points>) => {
-    console.log("Updating points for player:", playerId, points);
     setPlayers((prevPlayers) =>
-      prevPlayers.map((player) =>
-        player.id === playerId
-          ? { ...player, points: { ...player.points, ...points } }
-          : player
-      )
+      prevPlayers.map((player) => {
+        if (player.id === playerId) {
+          const newPoints = { ...player.points, ...points };
+          return {
+            ...player,
+            points: newPoints,
+            score: calculateScore(newPoints, gamemode),
+          };
+        }
+        return player;
+      })
     );
   };
 
@@ -62,6 +106,7 @@ export const useKniffel = () => {
           ? {
               ...player,
               points: initialPoints,
+              score: calculateScore(initialPoints, gamemode),
             }
           : player
       )
@@ -113,12 +158,18 @@ export const useKniffel = () => {
       prevPlayers.map((player) => ({
         ...player,
         points: initialPoints,
+        score: calculateScore(initialPoints, gamemode),
       }))
     );
   };
 
   const resetAll = () => {
-    setPlayers(initialPlayers);
+    setPlayers(
+      initialPlayers.map((p) => ({
+        ...p,
+        score: calculateScore(p.points, gamemode),
+      }))
+    );
   };
 
   return {

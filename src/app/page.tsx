@@ -4,10 +4,10 @@ import { gamemodes } from "@/components/gamemodes/gamemodes";
 import { Menu } from "@/components/Menu";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dices } from "lucide-react";
+import { Dices, UserRound } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function GamemodeSelect() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function GamemodeSelect() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const bought = localStorage.getItem("purchasedGamemodes");
-      setPurchased(bought ? JSON.parse(bought) : ["kniffel"]); // Kniffel always unlocked
+      setPurchased(bought ? JSON.parse(bought) : ["kniffel"]);
     }
   }, []);
 
@@ -40,7 +40,15 @@ export default function GamemodeSelect() {
             Würfelkarte
           </h1>
         </Link>
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-4">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => router.push("/profile")}
+            aria-label="Profil"
+          >
+            <UserRound />
+          </Button>
           <Menu />
         </div>
       </Card>

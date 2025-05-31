@@ -1,46 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { gamemodes } from "./gamemodes/gamemodes";
 import { Player } from "./hooks/types";
 
 interface AnimatedScoreDiagramProps {
   players: Player[];
-  gamemode: keyof typeof gamemodes;
 }
 
-export function AnimatedScoreDiagram({
-  players,
-  gamemode,
-}: AnimatedScoreDiagramProps) {
-  const config = gamemodes[gamemode];
-
-  const totalScores = players.map((player) => {
-    let bonus = 0;
-    let sum = 0;
-    if (config?.bonus) {
-      sum = config.bonus.fields.reduce(
-        (acc, key) =>
-          acc +
-          (typeof player.points[key as keyof typeof player.points] === "number"
-            ? (player.points[key as keyof typeof player.points] as number)
-            : 0),
-        0
-      );
-      if (sum >= config.bonus.minSum) {
-        bonus = config.bonus.bonus;
-      }
-    }
-    const totalScore =
-      config?.fields.reduce(
-        (acc, { key }) =>
-          acc +
-          (typeof player.points[key as keyof typeof player.points] === "number"
-            ? (player.points[key as keyof typeof player.points] as number)
-            : 0),
-        0
-      ) + bonus;
-    return totalScore;
-  });
+export function AnimatedScoreDiagram({ players }: AnimatedScoreDiagramProps) {
+  // Use the score property directly
+  const totalScores = players.map((player) => player.score);
 
   const [animatedScores, setAnimatedScores] = useState(
     totalScores.map(() => 0)

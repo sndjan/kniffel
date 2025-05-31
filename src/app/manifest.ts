@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Kniffel-Tracker",
-    short_name: "Kniffel",
+    name: "Wuerfelkarte",
+    short_name: "Wuerfelkarte",
     description:
-      "Kniffel-Tracker ist eine App, um den Spielstand von Kniffel zu verfolgen.",
+      "Wuerfelkarte ist eine Webseite, um den Spielstand von Kniffel zu verfolgen.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

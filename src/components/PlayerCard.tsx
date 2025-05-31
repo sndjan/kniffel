@@ -79,24 +79,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerPoints["Große Straße"], jsConfetti]);
 
-  let bonusValue = 0;
-  let bonusReached = false;
-  let sum = 0;
-  if (config.bonus) {
-    sum = config.bonus.fields.reduce(
-      (acc, key) =>
-        acc +
-        (typeof playerPoints[key] === "number"
-          ? (playerPoints[key] as number)
-          : 0),
-      0
-    );
-    if (sum >= config.bonus.minSum) {
-      bonusValue = config.bonus.bonus;
-      bonusReached = true;
-    }
-  }
-
   return (
     <Card className="p-4 flex flex-col justify-between items-center space-y-[-15px] h-full">
       <div className="flex flex-row justify-between w-full items-center mb-1">
@@ -110,86 +92,107 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           moveToLeft={moveToLeft}
         />
       </div>
-      {config.fields.map(({ key, label, options }) => {
-        const selectOptions =
-          options ?? pointsJson[key as keyof typeof pointsJson];
-        const fieldElement = (
-          <Select
-            key={key}
-            value={
-              playerPoints[key] !== 0 && playerPoints[key] !== undefined
-                ? playerPoints[key].toString()
-                : ""
-            }
-            onValueChange={(value) => {
-              if (value === "reset") {
-                updatePoints({ [key]: 0 });
-              } else if (value === "X") {
-                updatePoints({ [key]: "X" });
-              } else {
-                updatePoints({ [key]: parseInt(value, 10) });
+      {config.fields.map(
+        (field: {
+          key: string;
+          label: string;
+          options?: Array<number | string>;
+        }) => {
+          const { key, label, options } = field;
+          const selectOptions =
+            options ?? pointsJson[key as keyof typeof pointsJson];
+          const fieldElement = (
+            <Select
+              key={key}
+              value={
+                playerPoints[key] !== 0 && playerPoints[key] !== undefined
+                  ? playerPoints[key].toString()
+                  : ""
               }
-            }}
-          >
-            <SelectTrigger
-              className={`w-full h-2 ${
-                playerPoints[key] === "X"
-                  ? "bg-red-100"
-                  : playerPoints[key] === 0 || playerPoints[key] === undefined
-                  ? "bg-white"
-                  : "bg-gray-100"
-              }`}
+              onValueChange={(value) => {
+                if (value === "reset") {
+                  updatePoints({ [key]: 0 });
+                } else if (value === "X") {
+                  updatePoints({ [key]: "X" });
+                } else {
+                  updatePoints({ [key]: parseInt(value, 10) });
+                }
+              }}
             >
-              <SelectValue placeholder={label} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {selectOptions?.map?.((value: number | string, idx: number) => (
-                  <SelectItem key={idx} value={value.toString()}>
-                    {value}
+              <SelectTrigger
+                className={`w-full h-2 ${
+                  playerPoints[key] === "X"
+                    ? "bg-red-100"
+                    : playerPoints[key] === 0 || playerPoints[key] === undefined
+                    ? "bg-white"
+                    : "bg-gray-100"
+                }`}
+              >
+                <SelectValue placeholder={label} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {selectOptions?.map?.(
+                    (value: number | string, idx: number) => (
+                      <SelectItem key={idx} value={value.toString()}>
+                        {value}
+                      </SelectItem>
+                    )
+                  )}
+                </SelectGroup>
+                <SelectGroup>
+                  <SelectItem value="reset" className="font-bold">
+                    Zurücksetzen
                   </SelectItem>
-                ))}
-              </SelectGroup>
-              <SelectGroup>
-                <SelectItem value="reset" className="font-bold">
-                  Zurücksetzen
-                </SelectItem>
-                <SelectItem value="X" className="font-bold">
-                  ❌
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        );
-        if (
-          config.bonus &&
-          config.bonus.fields.includes(key) &&
-          config.bonus.fields[config.bonus.fields.length - 1] === key
-        ) {
-          return (
-            <div
-              key={key + "-with-bonus"}
-              className="w-full flex flex-col items-center"
-            >
-              {fieldElement}
-              <div className="my-3 font-bold">
-                {config.bonus.label}
-                {bonusReached ? (
-                  <>
-                    {sum}{" "}
-                    <Badge className="bg-green-600 font-bold">
-                      +{bonusValue}
-                    </Badge>
-                  </>
-                ) : (
-                  <>{sum}</>
-                )}
-              </div>
-            </div>
+                  <SelectItem value="X" className="font-bold">
+                    ❌
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           );
+          // Show bonus after the last bonus field
+          const isBonusField =
+            config.bonus && config.bonus.fields.includes(key);
+          const isLastBonusField =
+            isBonusField &&
+            config.bonus?.fields[config.bonus.fields.length - 1] === key;
+          if (isLastBonusField && config.bonus) {
+            // Calculate sum of bonus fields
+            const sum = config.bonus.fields.reduce(
+              (acc, bonusKey) =>
+                acc +
+                (typeof playerPoints[bonusKey] === "number"
+                  ? (playerPoints[bonusKey] as number)
+                  : 0),
+              0
+            );
+            const bonusReached = sum >= config.bonus.minSum;
+            return (
+              <div
+                key={key + "-with-bonus"}
+                className="w-full flex flex-col items-center"
+              >
+                {fieldElement}
+                <div className="my-3 font-bold">
+                  {config.bonus.label}
+                  {bonusReached ? (
+                    <>
+                      {sum}{" "}
+                      <Badge className="ml-2 bg-green-600 font-bold">
+                        +{config.bonus.bonus}
+                      </Badge>
+                    </>
+                  ) : (
+                    <>{sum} </>
+                  )}
+                </div>
+              </div>
+            );
+          }
+          return fieldElement;
         }
-        return fieldElement;
-      })}
+      )}
     </Card>
   );
 };

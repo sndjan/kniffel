@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,8 +17,10 @@ import {
   Sun,
   Trash2,
   Trophy,
+  UserRound,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { Player } from "./hooks/types";
 import { Scoring } from "./Scoring";
 
@@ -69,6 +73,12 @@ export function Menu({
                 <span>Punkteauswertung</span>
               </DropdownMenuItem>
             )}
+            <DropdownMenuItem asChild>
+              <Link href="/profile" className="flex items-center gap-2 w-full">
+                <UserRound />
+                <span>Profil</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => setTheme(theme === "light" ? "dark" : "light")}
             >
