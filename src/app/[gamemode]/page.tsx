@@ -10,15 +10,10 @@ import PlayerCard from "@/components/PlayerCard";
 import { Scoring } from "@/components/Scoring";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
 import { Library } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const params = useParams();
@@ -34,7 +29,6 @@ export default function Home() {
   // Always call hooks at the top
   const [purchased, setPurchased] = useState<string[] | null>(null);
   const [showScoring, setShowScoring] = useState(false);
-  const [isMobile, setIsMobile] = useState(true);
   const {
     players,
     addPlayer,
@@ -47,6 +41,8 @@ export default function Home() {
     resetAll,
     resetAllPoints,
   } = useKniffel(gamemode);
+
+  const playerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -65,14 +61,30 @@ export default function Home() {
     }
   }, [purchased, param, gamemode, router]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 640); // Tailwind's "sm" breakpoint
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const handleUpdatePoints = (playerId: number, points: Partial<Points>) => {
+    const currentIndex = players.findIndex((player) => player.id === playerId);
+    updatePoints(playerId, points);
+
+    setTimeout(() => {
+      const nextIndex = (currentIndex + 1) % players.length;
+
+      const container = document.getElementById("player-container");
+      const targetElement = playerRefs.current[nextIndex];
+
+      if (container && targetElement) {
+        const scrollPosition =
+          targetElement.offsetLeft -
+          container.offsetLeft -
+          container.clientWidth / 2 +
+          targetElement.offsetWidth / 2;
+
+        container.scrollTo({
+          left: scrollPosition,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  };
 
   if (purchased === null) {
     return null;
@@ -86,7 +98,7 @@ export default function Home() {
 
   return (
     <>
-      <Card className="m-4 p-4 flex flex-row justify-between items-center">
+      <Card className="m-4 p-4 flex flex-row justify-between items-center sticky top-4 z-10 bg-background">
         <Link href="/" className="flex flex-row ">
           <Library size={32} />
           <h1 className="scroll-m-20 sm:text-2xl mb-1 ml-4 font-extrabold tracking-tight lg:text-3xl text-xl mr-4">
@@ -128,37 +140,43 @@ export default function Home() {
           />
         </div>
       </Card>
-      <div className="flex px-4">
-        {/* <CategoryIcons addPlayer={addPlayer} /> */}
-        <Carousel className="w-full">
-          <CarouselContent className="-ml-4">
-            {players.map((player, index) => {
-              const basisPercent = `${100 / players.length}%`;
-
-              return (
-                <CarouselItem
-                  key={index}
-                  className="pl-4 basis-1/2 sm:basis-auto"
-                  style={!isMobile ? { flexBasis: basisPercent } : undefined}
-                >
-                  <PlayerCard
-                    playerName={player.name}
-                    playerPoints={player.points}
-                    updatePoints={(points: Partial<Points>) =>
-                      updatePoints(player.id, points)
-                    }
-                    resetPoints={() => resetPoints(player.id)}
-                    removePlayer={() => removePlayer(player.id)}
-                    changeName={(name) => changeName(player.id, name)}
-                    moveToRight={() => moveToRight(player.id)}
-                    moveToLeft={() => moveToLeft(player.id)}
-                    gamemode={gamemode}
-                  />
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
-        </Carousel>
+      <div
+        className="px-4 pb-24 overflow-x-auto snap-x snap-mandatory no-scrollbar"
+        style={{ scrollbarWidth: "none" }}
+        id="player-container"
+      >
+        <div
+          className={`flex flex-row gap-4 ${
+            players.length > 2 ? "min-w-max" : ""
+          }`}
+        >
+          {players.map((player, index) => {
+            return (
+              <div
+                className="snap-center"
+                key={index}
+                ref={(el) => {
+                  playerRefs.current[index] = el;
+                }}
+                style={{ width: "calc(50% - 8px)" }}
+              >
+                <PlayerCard
+                  playerName={player.name}
+                  playerPoints={player.points}
+                  updatePoints={(points: Partial<Points>) =>
+                    handleUpdatePoints(player.id, points)
+                  }
+                  resetPoints={() => resetPoints(player.id)}
+                  removePlayer={() => removePlayer(player.id)}
+                  changeName={(name) => changeName(player.id, name)}
+                  moveToRight={() => moveToRight(player.id)}
+                  moveToLeft={() => moveToLeft(player.id)}
+                  gamemode={gamemode}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
