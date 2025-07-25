@@ -17,7 +17,7 @@ export type GamemodeConfig = {
   bonus?: BonusConfig;
   description?: string;
   information?: string[];
-  price?: number; // Add price property
+  price?: number;
 };
 
 const allKniffel = [
@@ -33,9 +33,9 @@ const allKniffelPlus = [
 ];
 
 export const gamemodes: Record<string, GamemodeConfig> = {
-  Kniffel: {
-    name: "Kniffel",
-    description: "Das klassische Kniffel-Spiel.",
+  Klassiker: {
+    name: "Klassiker",
+    description: "Der Klassiker mit 5 Würfeln und allen bekannten Kategorien.",
     fields: [
       { key: "Einser", label: "Einser", options: [1, 2, 3, 4, 5] },
       { key: "Zweier", label: "Zweier", options: [2, 4, 6, 8, 10] },
@@ -56,7 +56,7 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       { key: "Full House", label: "Full House", options: [25] },
       { key: "Kleine Straße", label: "Kleine Straße", options: [30] },
       { key: "Große Straße", label: "Große Straße", options: [40] },
-      { key: "Kniffel", label: "Kniffel", options: [50] },
+      { key: "Wunder", label: "Wunder", options: [50] },
       { key: "Chance", label: "Chance", options: allKniffel },
     ],
     bonus: {
@@ -65,14 +65,14 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       minSum: 63,
       bonus: 35,
     },
-    price: 0, // Free
+    price: 0,
   },
-  MiniKniffel: {
-    name: "Mini-Kniffel",
+  Mini: {
+    name: "Mini",
     description:
       "Kompakte Version mit nur 3 Würfeln. Für schnelle und spannende Runden.",
     information: [
-      "Mini-Kniffel ist eine vereinfachte Version des klassischen Kniffels mit folgenden Änderungen:",
+      "Mini ist eine vereinfachte Version des Klassikers mit folgenden Änderungen:",
       "• Es werden nur 3 Würfel statt 5 verwendet.",
       "• Die Kategorien sind reduziert und passen zu den 3 Würfeln.",
       "• Die Punktewerte sind niedriger, um die schnelle Spielweise zu unterstützen.",
@@ -85,7 +85,7 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       { key: "Zweierpasch", label: "Zweierpasch", options: allKniffelMini },
       { key: "Tiny House", label: "Tiny House", options: [15] },
       { key: "Mini Straße", label: "Mini Straße", options: [20] },
-      { key: "Mini Kniffel", label: "Mini Kniffel", options: [30] },
+      { key: "Mini Wunder", label: "Mini Wunder", options: [30] },
       { key: "Chance", label: "Chance", options: allKniffelMini },
     ],
     bonus: {
@@ -94,18 +94,18 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       minSum: 30,
       bonus: 15,
     },
-    price: 1.99, // Example price
+    price: 0,
   },
-  KniffelPlus: {
-    name: "KniffelPlus",
+  SuperWurf: {
+    name: "SuperWurf",
     description:
       "Erweiterter Modus mit 6 Würfeln, spannenden Kategorien und viel mehr Punkten.",
     information: [
-      "KniffelPlus unterscheidet sich vom klassischen Kniffel in folgenden Punkten:",
+      "SuperWurf unterscheidet sich vom Klassiker in folgenden Punkten:",
       "• Es werden 6 Würfel statt 5 verwendet.",
       "• Die Zahlenfelder (Einser bis Sechser) können höhere Summen erreichen.",
       "• Neue Kategorien wie 'Fünferpasch', 'Dreifach-Paar', 'Full Villa' (zwei mal drei gleiche) und 'Riesige Straße' kommen hinzu.",
-      "• Der Kniffel+ ist mit 100 Punkten deutlich höher bewertet.",
+      "• Der SuperWurf ist mit 100 Punkten deutlich höher bewertet.",
       "• Die Anforderungen für den Bonus steigen (mindestens 84 Punkte in den oberen Feldern, also jeweils vier pro Zahl).",
     ],
     fields: [
@@ -129,7 +129,7 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       { key: "Full Villa", label: "Full Villa", options: [45] },
       { key: "Große Straße", label: "Große Straße", options: [40] },
       { key: "Riesige Straße", label: "Riesige Straße", options: [55] },
-      { key: "Kniffel+", label: "Kniffel+", options: [100] },
+      { key: "Super Wunder", label: "Super Wunder", options: [100] },
       {
         key: "Chance",
         label: "Chance",
@@ -142,6 +142,6 @@ export const gamemodes: Record<string, GamemodeConfig> = {
       minSum: 84,
       bonus: 50,
     },
-    price: 2.99, // Example price
+    price: 0,
   },
 };

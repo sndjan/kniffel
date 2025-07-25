@@ -1,14 +1,14 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
 import { gamemodes } from "@/components/gamemodes/gamemodes";
-import { Button } from "@/components/ui/button";
 import { Checkout } from "@/components/payment/Checkout";
-import { Dices } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { convertToSubcurrency } from "@/lib/utils";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { convertToSubcurrency } from "@/lib/utils";
+import { Dices } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
@@ -31,7 +31,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const bought = localStorage.getItem("purchasedGamemodes");
-      setPurchased(bought ? JSON.parse(bought) : ["kniffel"]);
+      setPurchased(bought ? JSON.parse(bought) : ["Klassiker"]);
     }
   }, []);
 

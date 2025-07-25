@@ -17,6 +17,6 @@ export type Points = {
   "Full House": number | "X";
   "Kleine Straße": number | "X";
   "Große Straße": number | "X";
-  Kniffel: number | "X";
+  Wunder: number | "X";
   Chance: number | "X";
 };

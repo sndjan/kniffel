@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Wuerfelkarte",
     short_name: "Wuerfelkarte",
     description:
-      "Wuerfelkarte ist eine Webseite, um den Spielstand von Kniffel zu verfolgen.",
+      "Wuerfelkarte ist eine Webseite, um den Spielstand von Würfelspielen zu verfolgen.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

@@ -13,7 +13,7 @@ export async function generateMetadata({
       (key) =>
         key.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() ===
         param.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()
-    ) as keyof typeof gamemodes) || "Kniffel";
+    ) as keyof typeof gamemodes) || "Klassiker";
   const titleGamemode = gamemodes[gamemode].name;
   return {
     title: `${titleGamemode}`,

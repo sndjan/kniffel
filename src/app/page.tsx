@@ -16,7 +16,7 @@ export default function GamemodeSelect() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const bought = localStorage.getItem("purchasedGamemodes");
-      setPurchased(bought ? JSON.parse(bought) : ["kniffel"]);
+      setPurchased(bought ? JSON.parse(bought) : ["Klassiker"]);
     }
   }, []);
 
@@ -58,7 +58,7 @@ export default function GamemodeSelect() {
           const isUnlocked =
             mode.price === 0 || purchased.includes(normalizedKey);
           return (
-            <div key={key} className="w-64">
+            <div key={key} className="mx-4 w-full sm:w-64">
               <Card
                 className={`h-64 w-full p-6 flex flex-col items-center justify-between`}
               >

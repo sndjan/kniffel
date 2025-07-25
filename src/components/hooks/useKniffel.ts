@@ -14,7 +14,7 @@ const initialPoints = {
   "Full House": 0,
   "Kleine Straße": 0,
   "Große Straße": 0,
-  Kniffel: 0,
+  Wunder: 0,
   Chance: 0,
 };
 
@@ -63,7 +63,7 @@ function calculateScore(
   return totalScore;
 }
 
-export const useKniffel = (gamemode: keyof typeof gamemodes = "Kniffel") => {
+export const useKniffel = (gamemode: keyof typeof gamemodes = "Klassiker") => {
   const [players, setPlayers] = useState<Player[]>(
     initialPlayers.map((p) => ({
       ...p,

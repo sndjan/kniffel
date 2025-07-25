@@ -29,7 +29,7 @@ export default function Home() {
       (key) =>
         key.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() ===
         param.replace(/[^a-zA-Z0-9]/g, "").toLowerCase()
-    ) as keyof typeof gamemodes) || "Kniffel+";
+    ) as keyof typeof gamemodes) || "SuperWurf";
 
   // Always call hooks at the top
   const [purchased, setPurchased] = useState<string[] | null>(null);
@@ -51,7 +51,7 @@ export default function Home() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const bought = localStorage.getItem("purchasedGamemodes");
-      setPurchased(bought ? JSON.parse(bought) : ["kniffel"]);
+      setPurchased(bought ? JSON.parse(bought) : ["Klassiker"]);
     }
   }, []);
 
@@ -75,7 +75,7 @@ export default function Home() {
   }, []);
 
   if (purchased === null) {
-    return null; // or loading spinner
+    return null;
   }
   const normalizedKey = param.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
   const modePrice = gamemodes[gamemode]?.price ?? 0;

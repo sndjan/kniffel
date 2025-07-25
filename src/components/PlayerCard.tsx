@@ -52,9 +52,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 
   useEffect(() => {
     if (
-      (playerPoints["Kniffel"] === 50 ||
-        playerPoints["Kniffel+"] === 50 ||
-        playerPoints["Mini Kniffel"] === 50) &&
+      (playerPoints["Klassiker"] === 50 ||
+        playerPoints["Mini"] === 100 ||
+        playerPoints["SuperWurf"] === 30) &&
       jsConfetti
     ) {
       jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
@@ -63,7 +63,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       jsConfetti?.clearCanvas();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerPoints["Kniffel"], jsConfetti]);
+  }, [playerPoints["Klassiker"], jsConfetti]);
 
   useEffect(() => {
     if (
