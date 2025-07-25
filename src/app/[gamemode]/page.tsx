@@ -45,6 +45,16 @@ export default function Home() {
   const playerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    const container = document.getElementById("player-container");
+    if (container) {
+      container.scrollTo({
+        left: 0,
+        behavior: "auto",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const bought = localStorage.getItem("purchasedGamemodes");
       setPurchased(bought ? JSON.parse(bought) : ["Klassiker"]);
