@@ -15,7 +15,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Dices } from "lucide-react";
+import { Library } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -88,7 +88,7 @@ export default function Home() {
     <>
       <Card className="m-4 p-4 flex flex-row justify-between items-center">
         <Link href="/" className="flex flex-row ">
-          <Dices size={32} strokeWidth={2.5} />
+          <Library size={32} />
           <h1 className="scroll-m-20 sm:text-2xl mb-1 ml-4 font-extrabold tracking-tight lg:text-3xl text-xl mr-4">
             {gamemodes[gamemode].name}
           </h1>
