@@ -29,6 +29,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
+
 interface EditPlayerProps {
   playerName: string;
   resetPoints: () => void;
@@ -47,13 +48,21 @@ export function EditPlayer({
   moveToLeft,
 }: EditPlayerProps) {
   const [newPlayerName, setNewPlayerName] = useState<string>(playerName);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     setNewPlayerName(playerName);
   }, [playerName]);
 
+  const handleNameChange = () => {
+    if (newPlayerName) {
+      changeName(newPlayerName);
+      setDropdownOpen(false); // Close the dropdown when name is changed
+    }
+  };
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
         <EllipsisVertical size={16} />
       </DropdownMenuTrigger>
@@ -90,11 +99,7 @@ export function EditPlayer({
                     <Button
                       type="button"
                       variant="secondary"
-                      onClick={() => {
-                        if (newPlayerName) {
-                          changeName(newPlayerName);
-                        }
-                      }}
+                      onClick={handleNameChange}
                     >
                       Speichern
                     </Button>
