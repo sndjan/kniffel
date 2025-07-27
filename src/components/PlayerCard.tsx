@@ -40,8 +40,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
   gamemode,
 }) => {
   const config = gamemodes[gamemode];
-
-  // TODO: make this configurable
   const [jsConfetti, setJsConfetti] = useState<JSConfetti | null>(null);
 
   useEffect(() => {
@@ -52,9 +50,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
 
   useEffect(() => {
     if (
-      (playerPoints["Klassiker"] === 50 ||
-        playerPoints["Mini"] === 100 ||
-        playerPoints["SuperWurf"] === 30) &&
+      (playerPoints["Wunder"] === 50 ||
+        playerPoints["Mini Wunder"] === 100 ||
+        playerPoints["Super Wunder"] === 30) &&
       jsConfetti
     ) {
       jsConfetti.addConfetti({ emojis: ["⭐", "🎲"] });
@@ -62,8 +60,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     return () => {
       jsConfetti?.clearCanvas();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerPoints["Klassiker"], jsConfetti]);
+  }, [jsConfetti, playerPoints]);
 
   useEffect(() => {
     if (
