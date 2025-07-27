@@ -12,6 +12,8 @@ import {
   DialogTitle,
 } from "./ui/dialog";
 
+const PROFILE_ACTIVE = process.env.NEXT_PUBLIC_PROFILE_ACTIVE === "true";
+
 interface ScoringProps {
   players: Player[];
   open: boolean;
@@ -70,26 +72,30 @@ export function Scoring({
         <div className="mt-4">
           <AnimatedScoreDiagram players={players} />
         </div>
-        <div className="mt-6 flex flex-col gap-2 items-center">
-          <Button
-            onClick={handleSaveMatch}
-            disabled={saveStatus === "saving" || saveStatus === "success"}
-          >
-            {saveStatus === "saving"
-              ? "Speichern..."
-              : saveStatus === "success"
-              ? "Gespeichert!"
-              : "Match speichern"}
-          </Button>
-          {saveStatus === "error" && (
-            <span className="text-red-500 text-sm">Fehler beim Speichern.</span>
-          )}
-          {saveStatus === "success" && (
-            <span className="text-green-600 text-sm">
-              Match erfolgreich gespeichert!
-            </span>
-          )}
-        </div>
+        {PROFILE_ACTIVE && (
+          <div className="mt-6 flex flex-col gap-2 items-center">
+            <Button
+              onClick={handleSaveMatch}
+              disabled={saveStatus === "saving" || saveStatus === "success"}
+            >
+              {saveStatus === "saving"
+                ? "Speichern..."
+                : saveStatus === "success"
+                ? "Gespeichert!"
+                : "Match speichern"}
+            </Button>
+            {saveStatus === "error" && (
+              <span className="text-red-500 text-sm">
+                Fehler beim Speichern.
+              </span>
+            )}
+            {saveStatus === "success" && (
+              <span className="text-green-600 text-sm">
+                Match erfolgreich gespeichert!
+              </span>
+            )}
+          </div>
+        )}{" "}
       </DialogContent>
     </Dialog>
   );

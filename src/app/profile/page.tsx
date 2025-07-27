@@ -17,6 +17,18 @@ import { redirect } from "next/navigation";
 import { DisplayNameEditor } from "./DisplayNameEditor";
 
 export default async function PrivatePage() {
+  if (process.env.PROFILE_ACTIVE !== "true") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <Card className="m-4 p-8 text-center">
+          <h2 className="text-2xl font-bold mb-2">Profil deaktiviert</h2>
+          <p className="text-gray-500">
+            Die Profilfunktion ist aktuell deaktiviert.
+          </p>
+        </Card>
+      </div>
+    );
+  }
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {

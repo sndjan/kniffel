@@ -9,6 +9,18 @@ import Link from "next/link";
 import { login, signup } from "./actions";
 
 export default function LoginPage() {
+  if (process.env.NEXT_PUBLIC_PROFILE_ACTIVE !== "true") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <Card className="m-4 p-8 text-center">
+          <h2 className="text-2xl font-bold mb-2">Login deaktiviert</h2>
+          <p className="text-gray-500">
+            Die Login-Funktion ist aktuell deaktiviert.
+          </p>
+        </Card>
+      </div>
+    );
+  }
   return (
     <div className={`flex flex-col`}>
       <Card className="m-4 p-4 flex flex-row justify-between items-center">

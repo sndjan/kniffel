@@ -5,6 +5,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
+  if (process.env.PROFILE_ACTIVE !== "true") {
+    throw new Error("Login is disabled.");
+  }
+
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -17,6 +21,7 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
+    console.log(error);
     redirect("/error");
   }
 
@@ -25,6 +30,10 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
+  if (process.env.PROFILE_ACTIVE !== "true") {
+    throw new Error("Signup is disabled.");
+  }
+
   const supabase = await createClient();
 
   // type-casting here for convenience

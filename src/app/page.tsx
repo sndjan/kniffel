@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const PROFILE_ACTIVE = process.env.NEXT_PUBLIC_PROFILE_ACTIVE === "true";
+
 export default function GamemodeSelect() {
   const router = useRouter();
   const [purchased, setPurchased] = useState<string[]>([]);
@@ -41,14 +43,16 @@ export default function GamemodeSelect() {
           </h1>
         </Link>
         <div className="flex flex-row gap-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => router.push("/profile")}
-            aria-label="Profil"
-          >
-            <UserRound />
-          </Button>
+          {PROFILE_ACTIVE && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => router.push("/profile")}
+              aria-label="Profil"
+            >
+              <UserRound />
+            </Button>
+          )}
           <Menu />
         </div>
       </Card>

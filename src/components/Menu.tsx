@@ -24,6 +24,8 @@ import Link from "next/link";
 import { Player } from "./hooks/types";
 import { Scoring } from "./Scoring";
 
+const PROFILE_ACTIVE = process.env.NEXT_PUBLIC_PROFILE_ACTIVE === "true";
+
 interface MenuProps {
   players?: Player[];
   resetAll?: () => void;
@@ -73,12 +75,17 @@ export function Menu({
                 <span>Punkteauswertung</span>
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem asChild>
-              <Link href="/profile" className="flex items-center gap-2 w-full">
-                <UserRound />
-                <span>Profil</span>
-              </Link>
-            </DropdownMenuItem>
+            {PROFILE_ACTIVE && (
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <UserRound />
+                  <span>Profil</span>
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               onSelect={() => setTheme(theme === "light" ? "dark" : "light")}
             >
